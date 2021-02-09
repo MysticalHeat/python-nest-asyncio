@@ -27,9 +27,8 @@ def unpack_incoming_response_from_nest(message):
     _s = message.split(b'#')
     final_length = int(_s[0])
     message = json.loads(message[len(str(final_length))+1:].decode())
-    
-    responseTcp = message['response'] if hasattr(message, 'response') else None
-    return message['err'], responseTcp
+
+    return message.get('err'), message.get('response')
 
 
 def pack_outgoing_message_to_client(response, message_id, err=None):
